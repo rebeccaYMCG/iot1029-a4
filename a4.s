@@ -36,33 +36,33 @@ _start:
     // If none of the conditions were met, print "Sorry, you got an F."
     LDR R1, =fmessage
     LDR R2, =flen
-    MOV R7, #4
-    SWI #0
+    MOV R7, #4      // Set the syscall number for 'write'
+    SWI #0          // Invoke sycall to print the message
     B end           // Branch to the end of the program
 
 a_grade:
     // Print "Congratulations! You got an A."
     LDR R1, =amessage
     LDR R2, =alen
-    MOV R7, #4
-    SWI #0
-    B end
+    MOV R7, #4      // Set the syscall number for 'write'
+    SWI #0          // Invoke sycall to print the message
+    B end           // Branch to the end of the program     
 
 b_grade:
     // Print "Good job! You got a B."
     LDR R1, =bmessage
     LDR R2, =blen
-    MOV R7, #4
-    SWI #0
-    B end
+    MOV R7, #4      // Set the syscall number for 'write'
+    SWI #0          // Invoke sycall to print the message
+    B end           // Branch to the end of the program
 
 c_grade:
     // Print "Not bad, you got a C."
     LDR R1, =cmessage
     LDR R2, =clen
-    MOV R7, #4
-    SWI #0
-    B end
+    MOV R7, #4      // Set the syscall number for 'write'
+    SWI #0          // Invoke sycall to print the message
+    B end           // Branch to the end of the program
 
 end:
     // End of the program
@@ -83,7 +83,7 @@ amessage:
 alen = . - amessage // Calculate the length of the A-grade message
 
 bmessage:
-    .asciz "Good job! You got a B.\n"
+    .asciz "Good job! You got a B.\n" 
 blen = . - bmessage // Calculate the length of the B-grade message
 
 cmessage:
