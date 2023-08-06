@@ -25,13 +25,13 @@ _start:
 
     // Compare the percentage grade with the grading thresholds
     CMP R5, R6       // Compare with 'amark' (A grade threshold)
-    BGE a_grade      // Branch to a_grade if R5 >= R6
+    BGE agrade      // Branch to agrade if R5 >= R6
 
     CMP R5, R7       // Compare with 'bmark' (B grade threshold)
-    BGE b_grade      // Branch to b_grade if R5 >= R7
+    BGE bgrade      // Branch to bgrade if R5 >= R7
 
     CMP R5, R8       // Compare with 'cmark' (C grade threshold)
-    BGE c_grade      // Branch to c_grade if R5 >= R8
+    BGE cgrade      // Branch to cgrade if R5 >= R8
 
     // If none of the conditions were met, print "Sorry, you got an F."
     LDR R1, =fmessage
@@ -40,7 +40,7 @@ _start:
     SWI #0          // Invoke sycall to print the message
     B end           // Branch to the end of the program
 
-a_grade:
+agrade:
     // Print "Congratulations! You got an A."
     LDR R1, =amessage
     LDR R2, =alen
@@ -48,15 +48,15 @@ a_grade:
     SWI #0          // Invoke sycall to print the message
     B end           // Branch to the end of the program     
 
-b_grade:
+bgrade:
     // Print "Good job! You got a B."
     LDR R1, =bmessage
-    LDR R2, =blen
+    LDR R2, =b_len  // Has to be set to b_len because of branching 
     MOV R7, #4      // Set the syscall number for 'write'
     SWI #0          // Invoke sycall to print the message
     B end           // Branch to the end of the program
 
-c_grade:
+cgrade:
     // Print "Not bad, you got a C."
     LDR R1, =cmessage
     LDR R2, =clen
@@ -73,23 +73,23 @@ end:
 .data
 prompt:
     .asciz "Please enter your percentage grade: "
-plen = . - prompt   // Calculate the length of the prompt message
+plen = .prompt   
 
 grade:
-    .byte 0           // Storage for the input percentage grade
+    .byte 0         // Storage for the input percentage grade
 
 amessage:
     .asciz "Congratulations! You got an A.\n"
-alen = . - amessage // Calculate the length of the A-grade message
+alen = .amessage 
 
 bmessage:
     .asciz "Good job! You got a B.\n" 
-blen = . - bmessage // Calculate the length of the B-grade message
+b_len = .bmessage 
 
 cmessage:
     .asciz "Not bad, you got a C.\n"
-clen = . - cmessage // Calculate the length of the C-grade message
+clen = .cmessage 
 
 fmessage:
     .asciz "Sorry, you got an F.\n"
-flen = . - fmessage // Calculate the length of the F-grade message
+flen = .fmessage 
